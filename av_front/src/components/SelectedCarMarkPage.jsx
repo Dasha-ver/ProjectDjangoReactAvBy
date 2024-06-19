@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
-import general_pic from "./pictures/general-pic.jpg";
+import general_pic from "../pictures/general-pic.jpg";
 import GeneralLineTable from "./GeneralLineTable"
 import FindForParamsForm from "./FindForParamsForm"
 import CarsTable from "./CarsTable"
@@ -16,9 +16,12 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
     const [carsCount, setCarsCount] = useState(location.state.count)
     const [yearFrom, setYearFrom] = useState(null)
     const [yearTo, setYearTo] = useState(null)
+    const [priceFrom, setPriceFrom] = useState(0)
+    const [priceTo, setPriceTo] = useState(10000000)
+    const [currency, setCurrency] = useState('USD')
 
-    const handleMarkCount = (markCount) => {
-        setCarsCount(markCount)
+    const handleCarsCount = (carsCount) => {
+        setCarsCount(carsCount)
         }
 
     const handleChangeMark = (markLink) => {
@@ -64,8 +67,43 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
              }else if (markLink !== "" && modelLink === "" && yearFrom === null){
                  setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year <= year))
                  }
+             }
 
-}
+   const handlePriceFrom = (price) => {
+         setPriceFrom(price)
+        }
+
+    const handlePriceTo = (price) => {
+        setPriceTo(price)
+        }
+
+    const handleCurrency = (currency) => {
+        setCurrency(currency)
+         }
+
+    const searchForPrice = (event) => {
+        if((markLink !== '' || modelLink !== '' || yearFrom !== null || yearTo !== null)&& currency === "USD"){
+            setSelectedCars(selectedCars.filter(car => car.card_price_secondary >= priceFrom && car.card_price_secondary <= priceTo))
+        }else if((markLink !== '' || modelLink !== '' || yearFrom !== null || yearTo !== null)&& currency === "BYN"){
+             setSelectedCars(selectedCars.filter(car => car.card_price_primary >= priceFrom && car.card_price_primary <= priceTo))
+        }else if((markLink === '' || modelLink === '' || yearFrom === null || yearTo === null)&& currency === "BYN"){
+             setSelectedCars(cars.filter(car => car.card_price_primary >= priceFrom && car.card_price_primary <= priceTo))
+        }else if((markLink === '' || modelLink === '' || yearFrom === null || yearTo === null)&& currency === "USD"){
+             setSelectedCars(cars.filter(car => car.card_price_secondary >= priceFrom && car.card_price_secondary <= priceTo))
+        }
+    }
+
+    const reset = (event) => {
+        setMarkLink('')
+        setModelLink('')
+        setYearFrom(null)
+        setYearTo(null)
+        setPriceFrom(0)
+        setPriceTo(10000000)
+        setCurrency('USD')
+        setSelectedCars([])
+        }
+
 
     if (location.state.count===0) {
         return(
@@ -81,18 +119,20 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
         <div>
             <img className="general-pic" src={general_pic} alt="fish"/>
             <GeneralLineTable/>
-            <FindForParamsForm changedYearFrom={handleChangeYearFrom} changedYearTo={handleChangeYearTo}
+            <FindForParamsForm changedPriceFrom={handlePriceFrom} changedPriceTo={handlePriceTo}
+                               changedCurrency={handleCurrency} searchForPrice={searchForPrice}
+                               changedYearFrom={handleChangeYearFrom} changedYearTo={handleChangeYearTo}
                                changedModelLink={handleChangeModel} changedMarkLink={handleChangeMark}
-                               changedMarkCount={handleMarkCount} carsCount={carsCount} defaultCount={location.state.count}
+                               changedCarsCount={handleCarsCount} carsCount={carsCount} defaultCount={location.state.count}
                                defaultValue={mark} defaultValueId={location.state.id} models={models}
-                               generalItems={generalItems} cars={cars}/>
+                               generalItems={generalItems} cars={cars} reset={reset}/>
             <div></div>
             <div>My link is:{markLink}</div>
             <div>My count is:{location.state.count}</div>
             <div>My count is:{location.state.id}</div>
             <div>My id is:{location.state.selectedMark}</div>
             <tr class="tr-car-item">
-                 <CarsTable carsCount={carsCount} cars={selectedCars}/>
+                 <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
             </tr>
 
             </div>

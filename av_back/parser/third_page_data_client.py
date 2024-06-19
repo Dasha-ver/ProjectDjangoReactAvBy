@@ -26,6 +26,10 @@ class DataClient(ABC):
     def insert(self, conn, link, model_name_id, table_name):
         pass
 
+    @abstractmethod
+    def delete_if_not_exist(self, conn, table_name,first_table_column, second_table_name, second_table_column):
+        pass
+
     def run_test(self, table_name):
         conn = self.get_connection()
         self.create_table(conn, table_name)
@@ -73,3 +77,8 @@ class ThirdPageSqlite3Client(DataClient):
         cursor.execute(f'SELECT id, link,  model_name_id FROM {table_name}')
         return cursor.fetchall()
 
+    def delete_if_not_exist(self, conn, first_table_name, first_table_column, second_table_name, second_table_column):
+        cursor = conn.cursor()
+        cursor.execute(f'DELETE FROM {first_table_name} WHERE {first_table_column} NOT IN (SELECT {second_table_column} '
+                       f'FROM {second_table_name})')
+        conn.commit()

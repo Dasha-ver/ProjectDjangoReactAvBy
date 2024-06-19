@@ -1,8 +1,11 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import Navigate from '../authComponents/Navigate'
 
 
 const GeneralLineTable = () => {
+
+    const navigate = useNavigate()
 
     return(
 
@@ -61,11 +64,11 @@ const GeneralLineTable = () => {
                 <a class="btn-vin" href="https://av.by/vin">Проверка VIN</a></button>
                 </td>
                 <td class="td-enter">
-                <a class="dropbtn" href="https://av.by/company">Войти</a>
+                <Navigate/>
                 </td>
                 <td class="td-place-ad">
                 <button class="btn-place-ad">
-                <a class="btn-place-ad" href="https://av.by/vin">Подать объявление</a></button>
+                <a class="btn-place-ad" onClick={() => navigate("/")}>Подать объявление</a></button>
                 </td>
             </table>
 

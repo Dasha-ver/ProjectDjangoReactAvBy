@@ -1,10 +1,11 @@
 import React, {useState} from "react" ;
-import general_pic from "./pictures/general-pic.jpg";
+import general_pic from "../pictures/general-pic.jpg";
 import FindForParamsForm from "./FindForParamsForm"
 import GeneralPageItemsTable from "./GeneralPageItemsTable"
 import SecondAd from "./SecondAd"
 import GeneralLineTable from "./GeneralLineTable"
 import CarsTable from "./CarsTable"
+
 
 
 const GeneralPage= ({generalItems, cars, models}) => {
@@ -20,8 +21,8 @@ const GeneralPage= ({generalItems, cars, models}) => {
     const [currency, setCurrency] = useState('USD')
 
 
-    const handleMarkCount = (markCount) => {
-        setCarsCount(markCount)
+    const handleCarsCount = (carsCount) => {
+        setCarsCount(carsCount)
     }
 
     const handleChangeMark = (markLink) => {
@@ -50,6 +51,7 @@ const GeneralPage= ({generalItems, cars, models}) => {
              }else if (mark !== "" && model === "" && yearTo === null){
                  setSelectedCars(cars.filter(car => car.mark_link === mark && car.year >= year))
     }
+
 }
 
     const handleChangeYearTo = (year) => {
@@ -112,6 +114,7 @@ const GeneralPage= ({generalItems, cars, models}) => {
 
          <div>
           <img className="general-pic" src={general_pic} alt="fish"/>
+
             <GeneralLineTable/>
             <SecondAd/>
             <GeneralPageItemsTable generalItems={generalItems} cars={cars}/>
@@ -119,10 +122,9 @@ const GeneralPage= ({generalItems, cars, models}) => {
                                changedCurrency={handleCurrency} searchForPrice={searchForPrice}
                                changedYearFrom={handleChangeYearFrom} changedYearTo={handleChangeYearTo}
                                changedModelLink={handleChangeModel} changedMarkLink={handleChangeMark}
-                               changedMarkCount={handleMarkCount} carsCount={carsCount} generalItems={generalItems}
+                               changedCarsCount={handleCarsCount} carsCount={carsCount} generalItems={generalItems}
                                models={models} cars={cars} reset={reset}/>
-            <div>{mark}, {yearFrom}, {priceFrom}, {currency}</div>
-            <CarsTable carsCount={carsCount} cars={selectedCars}/>
+            <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
          </div>
     )
 }

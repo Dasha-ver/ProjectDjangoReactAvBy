@@ -44,6 +44,10 @@ class DataClient(ABC):
         pass
 
     @abstractmethod
+    def drop_column(self, conn, table_name, column_name):
+        pass
+
+    @abstractmethod
     def insert(self, conn, general_link, general_link_text, mark_link, mark_link_text, model_link, model_link_text,
                detailed_link, detailed_link_text, description_in_general, card_header, card_stat, card_price_primary,
                card_price_secondary, card_commercial, card_params, card_short_description, card_short_modification,
@@ -266,4 +270,9 @@ class CarSqlite3Client(DataClient):
         cursor = conn.cursor()
         cursor.execute(f'UPDATE {table_name} SET {column_name_for_set} = ? '
                        f'WHERE  {column_name_for_where} = ?', (set_data, where_data))
+        conn.commit()
+
+    def drop_column(self, conn, table_name, column_name):
+        cursor = conn.cursor()
+        cursor.execute(f'ALTER TABLE {table_name} DROP COLUMN {column_name}')
         conn.commit()

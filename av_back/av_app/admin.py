@@ -1,5 +1,57 @@
 from django.contrib import admin
-from .models import GeneralPage, SecondPage, ThirdPage, Car
+from .models import GeneralPage, SecondPage, ThirdPage, Car, User
+from admin_extra_buttons.api import ExtraButtonsMixin, button, confirm_action, link, view
+from admin_extra_buttons.utils import HttpResponseRedirectToReferrer
+from django.http import HttpResponse, JsonResponse
+from django.contrib import admin
+from django.views.decorators.clickjacking import xframe_options_sameorigin
+from django.views.decorators.csrf import csrf_exempt
+
+
+class MyModelModelAdmin(ExtraButtonsMixin, admin.ModelAdmin):
+
+    @button(permission='demo.add_demomodel1',
+            visible=lambda self: self.context["request"].user.is_superuser,
+            change_form=True,
+            html_attrs={'style': 'background-color:#88FF88;color:black'})
+    def refresh(self, request):
+        self.message_user(request, 'refresh called')
+        # Optional: returns HttpResponse
+        return HttpResponseRedirectToReferrer(request)
+
+    @button(html_attrs={'style': 'background-color:#DC6C6C;color:black'})
+    def confirm(self, request):
+        def _action(request):
+            pass
+
+        return confirm_action(self, request, _action, "Confirm action",
+                              "Successfully executed", )
+
+    @link(href=None,
+          change_list=False,
+          html_attrs={'target': '_new', 'style': 'background-color:var(--button-bg)'})
+    def search_on_google(self, button):
+        original = button.context['original']
+        button.label = f"Search '{original.name}' on Google"
+        button.href = f"https://www.google.com/?q={original.name}"
+
+    @view()
+    def select2_autocomplete(self, request):
+        return JsonResponse({})
+
+    @view(http_basic_auth=True)
+    def api4(self, request):
+        return HttpResponse("Basic Authentication allowed")
+
+    @view(decorators=[csrf_exempt, xframe_options_sameorigin])
+    def preview(self, request):
+        if request.method == "POST":
+            return HttpResponse("POST")
+        return HttpResponse("GET")
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'email', 'password']
 
 
 class GeneralPageAdmin(admin.ModelAdmin):
@@ -15,9 +67,11 @@ class ThirdPageAdmin(admin.ModelAdmin):
 
 
 class CarAdmin(admin.ModelAdmin):
+    change_form_template = 'av_back/av_app/templates/admin/my_change_form.html'
     list_display = ['id', 'car', 'general_link', 'general_link_text', 'mark_link', 'mark_link_text', 'model_link',
-                    'model_link_text', 'year', 'detailed_link', 'detailed_link_text', 'description_in_general',
-                    'card_header', 'card_stat', 'card_price_primary', 'card_price_secondary', 'card_commercial',
+                    'model_link_text', 'year', 'date_added', 'detailed_link', 'detailed_link_text',
+                    'description_in_general',
+                    'card_header', 'card_price_primary', 'card_price_secondary', 'card_commercial',
                     'card_params', 'card_short_description', 'card_short_modification', 'card_all_param_button_href',
                     'card_location', 'vin', 'image_links', 'card_comment_text', 'card_exchange', 'exterior',
                     'security_systems', 'pillows', 'help_systems', 'interior', 'comfort', 'heating', 'climate',
@@ -41,3 +95,4 @@ admin.site.register(GeneralPage, GeneralPageAdmin)
 admin.site.register(SecondPage, SecondPageAdmin)
 admin.site.register(ThirdPage, ThirdPageAdmin)
 admin.site.register(Car, CarAdmin)
+admin.site.register(User, UserAdmin)

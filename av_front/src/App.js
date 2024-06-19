@@ -1,12 +1,17 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
-import GeneralPage from "./GeneralPage";
-import GeneralItem from "./GeneralItem"
-import Car from "./Car"
-import SelectedCarMarkPage from "./SelectedCarMarkPage"
+import GeneralPage from "./components/GeneralPage";
+import GeneralItem from "./components/GeneralItem"
+import Car from "./components/Car"
+import SelectedCarMarkPage from "./components/SelectedCarMarkPage"
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import GeneralLineTable from "./GeneralLineTable"
+import GeneralLineTable from "./components/GeneralLineTable"
+import Login from "./authComponents/Login";
+import Home from './authComponents/Home';
+import Logout from './authComponents/Logout';
+import Register from './authComponents/Register'
+
 
 
 const API_URL_GENERAL_PAGE = 'http://127.0.0.1:8000/general/'
@@ -47,11 +52,13 @@ function App() {
     return (
         <div className="App">
 
-
             <Routes>
                 <Route path="/GeneralPage" element={<GeneralPage generalItems={generalItems} cars={cars} models={models}/>} />
                 <Route path="/SelectedCar" element={<SelectedCarMarkPage generalItems={generalItems} models={models} cars={cars}/>} />
-
+                <Route path="/" element={<Home/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/logout" element={<Logout/>}/>
+                <Route path="/register" element={<Register/>}/>
             </Routes>
 
         </div>

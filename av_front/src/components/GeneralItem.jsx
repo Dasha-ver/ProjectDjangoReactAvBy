@@ -6,7 +6,6 @@ const GeneralItem = (props) => {
 
     const navigate = useNavigate();
 
-
     return(
          <tr>
              <td>
@@ -14,6 +13,7 @@ const GeneralItem = (props) => {
              <td class="td-general-page-item-mark-count">{props.generalItem.count}</td></button></td>
          </tr>
     )
+
 
 
 

@@ -1,4 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    username = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        db_table = 'auth_user'
 
 
 class GeneralPage(models.Model):
@@ -58,11 +70,11 @@ class Car(models.Model):
     model_link = models.TextField(max_length=300)
     model_link_text = models.TextField(max_length=300)
     year = models.IntegerField(default=1910)
+    date_added = models.DateTimeField(auto_now_add=True)
     detailed_link = models.TextField(max_length=300)
     detailed_link_text = models.TextField(max_length=300)
     description_in_general = models.TextField(max_length=300)
     card_header = models.TextField(max_length=300)
-    card_stat = models.TextField(max_length=500)
     card_price_primary = models.IntegerField()
     card_price_secondary = models.IntegerField()
     card_commercial = models.TextField(max_length=300)

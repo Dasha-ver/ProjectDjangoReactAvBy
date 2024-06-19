@@ -22,7 +22,7 @@ const Car = (props) => {
             <div class="F">{props.car.card_comment_text}</div>
             <div class="G"><div>{card_commercial[0]} {card_commercial[1]}</div>
                            <div>≈ {card_commercial[2]} {card_commercial[3]} {card_commercial[4]} {card_commercial[5]}</div>                                              </div>
-            <div class="H">H</div>
+            <div class="H">{props.car.card_location}</div>
 
 
 

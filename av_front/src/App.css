@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #E6E6FA;
+
 }
 
 .App-logo {
@@ -147,14 +148,16 @@
 }
 
 .td-enter{
-    padding-left: 180px;
+    padding-left: 50px;
     padding-right: 0px;
-    width: 90px;
+    width: 30px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .td-place-ad{
     padding-left: 0px;
-    padding-right: 10px;
+    padding-right: 20px;
     width: 190px;
 }
 
@@ -507,10 +510,12 @@
     }
 .B {
     width: 460px;
+    color: #1E90FF;
     margin-top: 15px;
     grid-area: i;
     text-align: left;
-
+    font-weight: 900;
+    font_size: 30px;
     }
 
 .C {
@@ -554,10 +559,32 @@
 
 .H {
     grid-area: r;
+    text-align: left;
 
 }
 
+.Auth-form-container{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
+
+.Auth-form{
+    width: 400px;
+    margin-top: 60px;
+}
+
+.input-label{
+    font-weight: 600;
+}
+
+.nav-link {
+   color: #4682B4 !important;
+
+
+}
 
 
 
