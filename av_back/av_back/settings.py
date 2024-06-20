@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    'admin_extra_buttons'
+    'django_object_actions',
 ]
 
 MIDDLEWARE = [
