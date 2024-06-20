@@ -20,10 +20,10 @@ class ThirdPageAdmin(admin.ModelAdmin):
 
 
 class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
-    def imports(modeladmin, request, queryset):
-        print(" ")
+    def exchange(modeladmin, request, queryset):
+        print("Imports button pushed")
 
-    changelist_actions = ('Пересчитать цену в USD по курсу', )
+    changelist_actions = ('exchange', )
 
     list_display = ['id', 'car', 'general_link', 'general_link_text', 'mark_link', 'mark_link_text', 'model_link',
                     'model_link_text', 'year', 'date_added', 'detailed_link', 'detailed_link_text',
