@@ -26,8 +26,8 @@ class ThirdPageAdmin(admin.ModelAdmin):
 
 class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
     def exchange(modeladmin, request, queryset):
-        parser_for_rate.p()
-        print("Imports button pushed")
+        parser = parser_for_rate.ParserForRate()
+        parser_for_rate.ParserForRate.run(parser)
 
     changelist_actions = ('exchange',)
 

@@ -1,7 +1,7 @@
 import sqlite3
 from abc import ABC, abstractmethod
 from sqlite3 import Error
-from av_back.av_back.settings import BASE_DIR
+from django.conf import settings
 
 
 class DataClient(ABC):
@@ -20,8 +20,8 @@ class DataClient(ABC):
 
 
 class RateSqlite3Client(DataClient):
-    DB_NAME = BASE_DIR / 'db.sqlite3'
-    GENERAL_PAGE_TABLE = 'av_app_rate'
+    DB_NAME = settings.BASE_DIR / 'db.sqlite3'
+    RATE_TABLE = 'av_app_rate'
 
     def get_connection(self):
         try:
