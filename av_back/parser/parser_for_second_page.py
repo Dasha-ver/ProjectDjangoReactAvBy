@@ -67,23 +67,4 @@ class ParserForSecondPage:
         self.save_to_db(second_page_data)
 
 
-# print(ParserForSecondPage.get_second_page_by_link(link='https://cars.av.by/alfa-romeo'))
-# general_page_data_client = general_page_data_client.GeneralPageSqlite3Client()
-# lists = general_page_data_client.get_items(general_page_data_client.get_connection(),
-#                                            general_page_data_client.GENERAL_PAGE_TABLE)
-# links = []
-# for item in lists:
-#     links.append(item[3])
-# print(links)
 
-# for item in links:
-#     print(item)
-
-# general_page_data = general_page_data_client.GeneralPageSqlite3Client()
-# general_page_list = general_page_data.get_items(general_page_data.get_connection(),
-#                                                     general_page_data.GENERAL_PAGE_TABLE)
-# links_to_parse = []
-# for item in general_page_list[7:20]:
-#     links_to_parse.append(item[3])
-# # # # copy = links_to_parse[53:]
-# print(links_to_parse)

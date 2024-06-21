@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -11,6 +12,17 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'auth_user'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+
+class Rate(models.Model):
+    rate = models.IntegerField(default=3.2)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Курс валют'
+        verbose_name_plural = 'Курсы валют'
 
 
 class GeneralPage(models.Model):

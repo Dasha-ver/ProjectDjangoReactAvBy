@@ -1,10 +1,15 @@
 from django.contrib import admin
-from .models import GeneralPage, SecondPage, ThirdPage, Car, User
-from django_object_actions import DjangoObjectActions, action
+from django_object_actions import DjangoObjectActions
+from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate
+from .parser_for_rate import parser_for_rate
 
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'email', 'password']
+
+
+class RateAdmin(admin.ModelAdmin):
+    list_display = ['id', 'rate', 'date']
 
 
 class GeneralPageAdmin(admin.ModelAdmin):
@@ -21,9 +26,10 @@ class ThirdPageAdmin(admin.ModelAdmin):
 
 class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
     def exchange(modeladmin, request, queryset):
+        parser_for_rate.p()
         print("Imports button pushed")
 
-    changelist_actions = ('exchange', )
+    changelist_actions = ('exchange',)
 
     list_display = ['id', 'car', 'general_link', 'general_link_text', 'mark_link', 'mark_link_text', 'model_link',
                     'model_link_text', 'year', 'date_added', 'detailed_link', 'detailed_link_text',
@@ -53,3 +59,4 @@ admin.site.register(SecondPage, SecondPageAdmin)
 admin.site.register(ThirdPage, ThirdPageAdmin)
 admin.site.register(Car, CarAdmin)
 admin.site.register(User, UserAdmin)
+admin.site.register(Rate, RateAdmin)

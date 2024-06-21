@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import GeneralPage, SecondPage, ThirdPage, Car, User
+from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -17,6 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rate
+        fields = '__all__'
 
 
 class GeneralPageSerializer(serializers.ModelSerializer):

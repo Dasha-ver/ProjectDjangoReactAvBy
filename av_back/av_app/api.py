@@ -1,6 +1,14 @@
-from .models import GeneralPage, SecondPage, ThirdPage, Car
+from .models import GeneralPage, SecondPage, ThirdPage, Car, Rate
 from rest_framework import viewsets, permissions
-from .serializers import GeneralPageSerializer, SecondPageSerializer, ThirdPageSerializer, CarSerializer
+from .serializers import GeneralPageSerializer, SecondPageSerializer, ThirdPageSerializer, CarSerializer, RateSerializer
+
+
+class RateViewSet(viewsets.ModelViewSet):
+    queryset = Rate.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = RateSerializer
 
 
 class GeneralPageViewSet(viewsets.ModelViewSet):
