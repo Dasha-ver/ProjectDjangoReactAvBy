@@ -19,6 +19,7 @@ class DataClient(ABC):
         pass
 
 
+
 class RateSqlite3Client(DataClient):
     DB_NAME = settings.BASE_DIR / 'db.sqlite3'
     RATE_TABLE = 'av_app_rate'
@@ -37,7 +38,7 @@ class RateSqlite3Client(DataClient):
                 CREATE TABLE IF NOT EXISTS {table_name}
                 (
                     id integer PRIMARY KEY autoincrement, 
-                    rate integer, 
+                    rate REAL, 
                     date TEXT
                 )
             """
@@ -49,3 +50,6 @@ class RateSqlite3Client(DataClient):
         cursor.execute(
             f"INSERT INTO {table_name} (rate, date) VALUES ('{rate}', '{date}')")
         conn.commit()
+
+
+

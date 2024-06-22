@@ -17,7 +17,7 @@ class User(AbstractUser):
 
 
 class Rate(models.Model):
-    rate = models.IntegerField(default=3.2)
+    rate = models.FloatField(default=3.2)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
