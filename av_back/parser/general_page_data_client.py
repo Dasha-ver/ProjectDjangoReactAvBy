@@ -27,7 +27,7 @@ class DataClient(ABC):
         pass
 
     @abstractmethod
-    def update_count(self, conn, table_name, count, link):
+    def update_line(self, conn, table_name, set_column_name, where_column_name, set_value, where_value):
         pass
 
     @abstractmethod
@@ -84,10 +84,10 @@ class GeneralPageSqlite3Client(DataClient):
             f"UPDATE {table_name} SET count = 0")
         conn.commit()
 
-    def update_count(self, conn, table_name, count, link):
+    def update_line(self, conn, table_name, set_column_name, where_column_name, set_value, where_value):
         cursor = conn.cursor()
         cursor.execute(
-            f'UPDATE {table_name} SET count = ? WHERE link = ?', (count, link))
+            f'UPDATE {table_name} SET {set_column_name} = ? WHERE {where_column_name} = ?', (set_value, where_value))
         conn.commit()
 
     def delete_if_count_zero(self, conn, table_name):

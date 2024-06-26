@@ -7,6 +7,7 @@ from django.db.models import F
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'email', 'password']
+    ordering = ['username']
 
 
 class RateAdmin(admin.ModelAdmin):
@@ -15,6 +16,7 @@ class RateAdmin(admin.ModelAdmin):
 
 class GeneralPageAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'count', 'link']
+    search_fields = ['title']
 
 
 class SecondPageAdmin(admin.ModelAdmin):
@@ -56,6 +58,8 @@ class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
                     'sixth_similar_ad_title', 'sixth_similar_ad_price', 'sixth_similar_ad_params',
                     'seventh_similar_ad_photo', 'seventh_similar_ad_link', 'seventh_similar_ad_title',
                     'seventh_similar_ad_price', 'seventh_similar_ad_params']
+
+    search_fields = ['mark_link_text']
 
 
 admin.site.register(GeneralPage, GeneralPageAdmin)

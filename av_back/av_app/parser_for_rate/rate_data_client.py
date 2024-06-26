@@ -19,7 +19,6 @@ class DataClient(ABC):
         pass
 
 
-
 class RateSqlite3Client(DataClient):
     DB_NAME = settings.BASE_DIR / 'db.sqlite3'
     RATE_TABLE = 'av_app_rate'
@@ -50,6 +49,3 @@ class RateSqlite3Client(DataClient):
         cursor.execute(
             f"INSERT INTO {table_name} (rate, date) VALUES ('{rate}', '{date}')")
         conn.commit()
-
-
-

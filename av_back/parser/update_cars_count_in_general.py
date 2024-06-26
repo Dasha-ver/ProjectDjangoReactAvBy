@@ -10,10 +10,9 @@ update_list = car_data_client.get_each_mark_count(car_data_client.get_connection
 general_page_data_client.update_count_to_null(general_page_data_client.get_connection(),
                                               GeneralPageSqlite3Client.GENERAL_PAGE_TABLE)
 for item in update_list:
-    general_page_data_client.update_count(general_page_data_client.get_connection(),
-                                          GeneralPageSqlite3Client.GENERAL_PAGE_TABLE, item[1], item[0])
+    general_page_data_client.update_line(general_page_data_client.get_connection(),
+                                         GeneralPageSqlite3Client.GENERAL_PAGE_TABLE, 'count', 'link',
+                                         item[1], item[0])
 
 general_page_data_client.delete_if_count_zero(general_page_data_client.get_connection(),
                                               GeneralPageSqlite3Client.GENERAL_PAGE_TABLE)
-
-

@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import general_pic from "../pictures/general-pic.jpg";
 import GeneralLineTable from "./GeneralLineTable"
 import FindForParamsForm from "./FindForParamsForm"
 import CarsTable from "./CarsTable"
+import axios from "axios";
 
 
 const SelectedCarMarkPage = ({generalItems, cars, models}) => {
@@ -12,13 +13,22 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
     const [mark, setMark] = useState(generalItems.filter(t => t.title === location.state.selectedMark))
     const [markLink, setMarkLink] = useState(location.state.link)
     const [modelLink, setModelLink] = useState("")
-    const [selectedCars, setSelectedCars] = useState(cars.filter(car => car.mark_link === location.state.link))
+    const [selectedCars, setSelectedCars] = useState([])
     const [carsCount, setCarsCount] = useState(location.state.count)
     const [yearFrom, setYearFrom] = useState(null)
     const [yearTo, setYearTo] = useState(null)
     const [priceFrom, setPriceFrom] = useState(0)
     const [priceTo, setPriceTo] = useState(10000000)
     const [currency, setCurrency] = useState('USD')
+
+
+    async function getSelectedCars() {
+        const response = await axios.get("http://127.0.0.1:8000/cars/" + location.state.selectedMark + "/")
+        setSelectedCars(response.data)
+    }
+
+    useEffect(() => {
+        getSelectedCars()}, [])
 
     const handleCarsCount = (carsCount) => {
         setCarsCount(carsCount)
@@ -130,7 +140,7 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
             <div>My link is:{markLink}</div>
             <div>My count is:{location.state.count}</div>
             <div>My count is:{location.state.id}</div>
-            <div>My id is:{location.state.selectedMark}</div>
+            <div>My id is:{cars.mark_link}</div>
             <tr class="tr-car-item">
                  <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
             </tr>
