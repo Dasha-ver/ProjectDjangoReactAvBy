@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import Select from "react-select";
 
 
-const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultValueId, changedMarkLink,
-                            changedCarsCount, changedModelLink, changedYearFrom, changedYearTo,
+const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultValueId, changedMark,
+                            changedCarsCount, changedModel, changedYearFrom, changedYearTo,
                             changedPriceFrom, changedPriceTo, changedCurrency, searchForPrice,
                             reset}) => {
 
@@ -56,7 +56,7 @@ const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultVal
           setYearTo(null)
           setMark(obj)
           setModelList(models.filter(t => t.mark === obj.id))
-          changedMarkLink(obj.link)
+          changedMark(obj.title)
           changedCarsCount(obj.count)
       }
 
@@ -66,7 +66,7 @@ const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultVal
          setYearFrom(null)
          setYearTo(null)
          changedCarsCount(obj.count)
-         changedModelLink(obj.link)
+         changedModel(obj.title)
        }
 
         const handleYearFromChange = (obj) => {

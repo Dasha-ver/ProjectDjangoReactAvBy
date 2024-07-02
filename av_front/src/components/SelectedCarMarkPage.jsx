@@ -9,9 +9,13 @@ import axios from "axios";
 
 const SelectedCarMarkPage = ({generalItems, cars, models}) => {
 
-    const location = useLocation();
-    const [mark, setMark] = useState(generalItems.filter(t => t.title === location.state.selectedMark))
-    const [markLink, setMarkLink] = useState(location.state.link)
+    const location = useLocation()
+    const [markList, setMarkList] = useState(generalItems.filter(t => t.title === location.state.selectedMark))
+    const [firstMark, setFirstMark] = useState(location.state.selectedMark)
+    const [mark, setMark] = useState("")
+    const [firstSelectedCars, setFirstSelectedCars] = useState([])
+    const [markLink, setMarkLink] = useState("")
+    const [model, setModel] = useState("")
     const [modelLink, setModelLink] = useState("")
     const [selectedCars, setSelectedCars] = useState([])
     const [carsCount, setCarsCount] = useState(location.state.count)
@@ -22,61 +26,67 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
     const [currency, setCurrency] = useState('USD')
 
 
-    async function getSelectedCars() {
-        const response = await axios.get("http://127.0.0.1:8000/cars/" + location.state.selectedMark + "/")
+    async function getSelectedCars(selected) {
+        const response = await axios.get("http://127.0.0.1:8000/" + selected + "/")
         setSelectedCars(response.data)
+        setFirstSelectedCars(response.data)
     }
 
+
     useEffect(() => {
-        getSelectedCars()}, [])
+        getSelectedCars('carmark/'+ location.state.selectedMark)
+    }, [location.state.selectedMark])
+
+
 
     const handleCarsCount = (carsCount) => {
         setCarsCount(carsCount)
         }
 
-    const handleChangeMark = (markLink) => {
-        setMarkLink(markLink)
-        setSelectedCars(cars.filter(car => car.mark_link === markLink))
+    const handleChangeMark = (mark) => {
+        setMark(mark)
+        setModel('')
+        getSelectedCars('carmark/'+mark)
+        setFirstSelectedCars(selectedCars)
 
-  }
-
-   const handleChangeModel = (modelLink) => {
-        setModelLink(modelLink)
-        setSelectedCars(cars.filter(car => car.model_link === modelLink))
     }
+
+   const handleChangeModel = (model) => {
+       setSelectedCars(firstSelectedCars.filter(t => t.model_link_text === model))
+       setModel(model)
+   }
 
     const handleChangeYearFrom = (year) => {
         setYearFrom(Number(year))
-         if (markLink !== "" && modelLink !== "" && yearTo !== null) {
-             setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year >= year && car.year <= yearTo))
-             }else if(markLink !== "" && modelLink === "" && yearTo !== null){
-                 setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year >= year && car.year <= yearTo))
-             }else if(markLink === "" && modelLink === "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.year >= year))
-             }else if(markLink === "" && modelLink === "" && yearTo !== null){
-                 setSelectedCars(cars.filter(car => car.year >= year && car.year <= yearTo))
-             }else if(markLink !== "" && modelLink !== "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year >= year))
-             }else if (markLink !== "" && modelLink === "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year >= year))
-                 }
-    }
+         if (firstMark !== "" && mark !== "" && model === "" && yearTo === null){
+             setSelectedCars(firstSelectedCars.filter(car => car.year >= Number(year)))
+              }else if (firstMark !== "" && mark !== "" && model !== "" && yearTo === null){
+                  setSelectedCars(firstSelectedCars.filter(car => car.year >= Number(year) && car.model_link_text === model))
+              }else if(firstMark !== "" && mark !== "" && model === "" && yearTo !== null){
+                  setSelectedCars(firstSelectedCars.filter(car => car.year >= Number(year) && car.year <= yearTo))
+              }else if(firstMark !== "" && mark === "" && model === "" && yearTo === null){
+                  getSelectedCars('carsyearfrom/' + year)
+              }else if (firstMark !== "" && mark === "" && model === "" && yearTo !== null){
+                  getSelectedCars('carsyearfrom/' + year)
+              }
+}
+
 
     const handleChangeYearTo = (year) => {
         setYearTo(Number(year))
-        if (markLink !== "" && modelLink !== "" && yearFrom !== null) {
-             setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year >= yearFrom && car.year <= year))
-             }else if (markLink !== "" && modelLink !== "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year <= year))
-             }else if (markLink !== "" && modelLink === "" && yearFrom !== null){
-                 setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year >= yearFrom && car.year <= year))
-             }else if (markLink === "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.year <= year))
-             }else if (markLink === "" && yearFrom !== null){
-                 setSelectedCars(cars.filter(car => car.year >= yearFrom && car.year <= year))
-             }else if (markLink !== "" && modelLink === "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year <= year))
-                 }
+//         if (markLink !== "" && modelLink !== "" && yearFrom !== null) {
+//              setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year >= yearFrom && car.year <= year))
+//              }else if (markLink !== "" && modelLink !== "" && yearFrom === null){
+//                  setSelectedCars(cars.filter(car => car.model_link === modelLink && car.mark_link === markLink && car.year <= year))
+//              }else if (markLink !== "" && modelLink === "" && yearFrom !== null){
+//                  setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year >= yearFrom && car.year <= year))
+//              }else if (markLink === "" && yearFrom === null){
+//                  setSelectedCars(cars.filter(car => car.year <= year))
+//              }else if (markLink === "" && yearFrom !== null){
+//                  setSelectedCars(cars.filter(car => car.year >= yearFrom && car.year <= year))
+//              }else if (markLink !== "" && modelLink === "" && yearFrom === null){
+//                  setSelectedCars(cars.filter(car => car.mark_link === markLink && car.year <= year))
+//                  }
              }
 
    const handlePriceFrom = (price) => {
@@ -104,7 +114,7 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
     }
 
     const reset = (event) => {
-        setMarkLink('')
+        setMark('')
         setModelLink('')
         setYearFrom(null)
         setYearTo(null)
@@ -132,15 +142,16 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
             <FindForParamsForm changedPriceFrom={handlePriceFrom} changedPriceTo={handlePriceTo}
                                changedCurrency={handleCurrency} searchForPrice={searchForPrice}
                                changedYearFrom={handleChangeYearFrom} changedYearTo={handleChangeYearTo}
-                               changedModelLink={handleChangeModel} changedMarkLink={handleChangeMark}
+                               changedModel={handleChangeModel} changedMark={handleChangeMark}
                                changedCarsCount={handleCarsCount} carsCount={carsCount} defaultCount={location.state.count}
-                               defaultValue={mark} defaultValueId={location.state.id} models={models}
+                               defaultValue={markList} defaultValueId={location.state.id} models={models}
                                generalItems={generalItems} cars={cars} reset={reset}/>
             <div></div>
-            <div>My link is:{markLink}</div>
+            <div>My year is:{yearFrom}</div>
             <div>My count is:{location.state.count}</div>
-            <div>My count is:{location.state.id}</div>
-            <div>My id is:{cars.mark_link}</div>
+            <div>My model is:{model}</div>
+            <div>My mark is:{mark}</div>
+            <div>My firstmark is:{firstMark}</div>
             <tr class="tr-car-item">
                  <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
             </tr>
