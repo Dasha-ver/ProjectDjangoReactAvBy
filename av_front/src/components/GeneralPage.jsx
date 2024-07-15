@@ -5,6 +5,7 @@ import GeneralPageItemsTable from "./GeneralPageItemsTable"
 import SecondAd from "./SecondAd"
 import GeneralLineTable from "./GeneralLineTable"
 import CarsTable from "./CarsTable"
+import axios from "axios"
 
 
 
@@ -14,64 +15,68 @@ const GeneralPage= ({generalItems, cars, models}) => {
     const [carsCount, setCarsCount] = useState('')
     const [mark, setMark] = useState('')
     const [model, setModel] = useState('')
-    const [yearFrom, setYearFrom] = useState(null)
-    const [yearTo, setYearTo] = useState(null)
+    const [yearFrom, setYearFrom] = useState('')
+    const [yearTo, setYearTo] = useState('')
     const [priceFrom, setPriceFrom] = useState(0)
     const [priceTo, setPriceTo] = useState(10000000)
     const [currency, setCurrency] = useState('USD')
 
+    async function getSelectedCars(selected) {
+        const response = await axios.get("http://127.0.0.1:8000/" + selected)
+        setSelectedCars(response.data)
+    }
 
     const handleCarsCount = (carsCount) => {
         setCarsCount(carsCount)
     }
 
-    const handleChangeMark = (markLink) => {
-        setMark(markLink)
-        setSelectedCars(cars.filter(car => car.mark_link === markLink))
+    const handleChangeMark = (mark) => {
+        setMark(mark)
+        setModel('')
+        getSelectedCars('cars/?mark_link_text__in='+mark)
     }
 
-    const handleChangeModel = (modelLink) => {
-        setModel(modelLink)
-        setSelectedCars(cars.filter(car => car.model_link === modelLink))
-    }
-
+   const handleChangeModel = (model) => {
+       getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model)
+       setModel(model)
+   }
 
     const handleChangeYearFrom = (year) => {
-        setYearFrom(Number(year))
-         if (mark !== "" && model !== "" && yearTo !== null) {
-             setSelectedCars(cars.filter(car => car.model_link === model && car.mark_link === mark && car.year >= year && car.year <= yearTo))
-             }else if(mark !== "" && model === "" && yearTo !== null){
-                 setSelectedCars(cars.filter(car => car.mark_link === mark && car.year >= year && car.year <= yearTo))
-             }else if(mark === "" && model === "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.year >= year))
-             }else if(mark === "" && model === "" && yearTo !== null){
-                 setSelectedCars(cars.filter(car => car.year >= year && car.year <= yearTo))
-             }else if(mark !== "" && model !== "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.model_link === model && car.mark_link === mark && car.year >= year))
-             }else if (mark !== "" && model === "" && yearTo === null){
-                 setSelectedCars(cars.filter(car => car.mark_link === mark && car.year >= year))
-    }
-
+        setYearFrom(year)
+         if (mark !== "" && model === "" && yearTo === ""){
+             getSelectedCars('cars/?mark_link_text__in='+mark+'&year__gte='+year)
+              }else if ( mark !== "" && model !== "" && yearTo === ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__gte='+year)
+              }else if( mark !== "" && model === "" && yearTo !== ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&year__range='+year+','+yearTo)
+              }else if(mark === "" && model === "" && yearTo === ""){
+                  getSelectedCars('cars/?year__gte='+year)
+              }else if ( mark === "" && model === "" && yearTo !== ""){
+                  getSelectedCars('cars/?year__range=' + year + ',' + yearTo)
+              }else if( mark !== "" && model !== "" && yearTo !== ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__range='+year+','+yearTo)
+              }
 }
 
-    const handleChangeYearTo = (year) => {
-        setYearTo(Number(year))
-        if (mark !== "" && model !== "" && yearFrom !== null) {
-             setSelectedCars(cars.filter(car => car.model_link === model && car.mark_link === mark && car.year >= yearFrom && car.year <= year))
-             }else if (mark !== "" && model !== "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.model_link === model && car.mark_link === mark && car.year <= year))
-             }else if (mark !== "" && model === "" && yearFrom !== null){
-                 setSelectedCars(cars.filter(car => car.mark_link === mark && car.year >= yearFrom && car.year <= year))
-             }else if (mark === "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.year <= year))
-             }else if (mark === "" && yearFrom !== null){
-                 setSelectedCars(cars.filter(car => car.year >= yearFrom && car.year <= year))
-             }else if (mark !== "" && model === "" && yearFrom === null){
-                 setSelectedCars(cars.filter(car => car.mark_link === mark && car.year <= year))
-             }
-    }
 
-     const handlePriceFrom = (price) => {
+    const handleChangeYearTo = (year) => {
+        setYearTo(year)
+         if (mark !== "" && model === "" && yearFrom === ""){
+             getSelectedCars('cars/?mark_link_text__in='+mark+'&year__lte='+year)
+              }else if ( mark !== "" && model !== "" && yearFrom === ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__lte='+year)
+              }else if( mark !== "" && model === "" && yearFrom !== ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&year__range='+yearFrom+','+year)
+              }else if(mark === "" && model === "" && yearFrom === ""){
+                  getSelectedCars('cars/?year__lte='+ year)
+              }else if( mark === "" && model === "" && yearFrom !== ""){
+                  getSelectedCars('cars/?year__range=' + yearFrom + ',' + year)
+              }else if( mark !== "" && model !== "" && yearFrom !== ""){
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__range='+yearFrom+','+year)
+              }
+             }
+
+   const handlePriceFrom = (price) => {
          setPriceFrom(price)
         }
 
@@ -84,27 +89,28 @@ const GeneralPage= ({generalItems, cars, models}) => {
          }
 
     const searchForPrice = (event) => {
-        if((mark !== '' || model !== '' || yearFrom !== null || yearTo !== null)&& currency === "USD"){
-            setSelectedCars(selectedCars.filter(car => car.card_price_secondary >= priceFrom && car.card_price_secondary <= priceTo))
-        }else if((mark !== '' || model !== '' || yearFrom !== null || yearTo !== null)&& currency === "BYN"){
+        if((mark !== '' || model !== '' || yearFrom !== "" || yearTo !== "")&& currency === "USD"){
+             setSelectedCars(selectedCars.filter(car => car.card_price_secondary >= priceFrom && car.card_price_secondary <= priceTo))
+        }else if((mark !== '' || model !== '' || yearFrom !== "" || yearTo !== "")&& currency === "BYN"){
              setSelectedCars(selectedCars.filter(car => car.card_price_primary >= priceFrom && car.card_price_primary <= priceTo))
-        }else if((mark === '' || model === '' || yearFrom === null || yearTo === null)&& currency === "BYN"){
-             setSelectedCars(cars.filter(car => car.card_price_primary >= priceFrom && car.card_price_primary <= priceTo))
-        }else if((mark === '' || model === '' || yearFrom === null || yearTo === null)&& currency === "USD"){
-             setSelectedCars(cars.filter(car => car.card_price_secondary >= priceFrom && car.card_price_secondary <= priceTo))
+        }else if(mark === '' && model === '' && yearFrom === "" && yearTo === "" && currency === "BYN"){
+             getSelectedCars('cars/?card_price_primary__range='+priceFrom+','+priceTo)
+        }else if(mark === '' && model === '' && yearFrom === "" && yearTo === "" && currency === "USD"){
+             getSelectedCars('cars/?card_price_secondary__range='+priceFrom+','+priceTo)
         }
     }
 
     const reset = (event) => {
         setMark('')
         setModel('')
-        setYearFrom(null)
-        setYearTo(null)
+        setYearFrom('')
+        setYearTo('')
         setPriceFrom(0)
         setPriceTo(10000000)
         setCurrency('USD')
         setSelectedCars([])
         }
+
 
     if (!generalItems.length) {
         return <h3> Нет информации </h3>
@@ -121,9 +127,10 @@ const GeneralPage= ({generalItems, cars, models}) => {
             <FindForParamsForm changedPriceFrom={handlePriceFrom} changedPriceTo={handlePriceTo}
                                changedCurrency={handleCurrency} searchForPrice={searchForPrice}
                                changedYearFrom={handleChangeYearFrom} changedYearTo={handleChangeYearTo}
-                               changedModelLink={handleChangeModel} changedMarkLink={handleChangeMark}
+                               changedModel={handleChangeModel} changedMark={handleChangeMark}
                                changedCarsCount={handleCarsCount} carsCount={carsCount} generalItems={generalItems}
                                models={models} cars={cars} reset={reset}/>
+
             <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
          </div>
     )

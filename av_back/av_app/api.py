@@ -1,7 +1,8 @@
 from .models import GeneralPage, SecondPage, ThirdPage, Car, Rate
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 from .serializers import GeneralPageSerializer, SecondPageSerializer, ThirdPageSerializer, CarSerializer, RateSerializer
-from django.db.models import Q
+from django_filters import FilterSet, AllValuesFilter
+from django_filters import DateTimeFilter, NumberFilter
 
 
 class RateViewSet(viewsets.ModelViewSet):
@@ -20,28 +21,12 @@ class GeneralPageViewSet(viewsets.ModelViewSet):
     serializer_class = GeneralPageSerializer
 
 
-class SecondPageViewSet(viewsets.ModelViewSet):
-    queryset = SecondPage.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = SecondPageSerializer
-
-
 class ThirdPageViewSet(viewsets.ModelViewSet):
     queryset = ThirdPage.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
     serializer_class = ThirdPageSerializer
-
-
-class CarViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = CarSerializer
 
 
 class MarkViewSet(viewsets.ModelViewSet):
@@ -71,43 +56,3 @@ class MarkModelViewSet(viewsets.ModelViewSet):
         return super().get_queryset()
 
 
-class YearFromViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = CarSerializer
-
-    def get_queryset(self):
-        if (year := self.kwargs.get("year", None)) is not None:
-            return Car.objects.filter(year__gte=year)
-
-        return super().get_queryset()
-
-
-class YearToViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = CarSerializer
-
-    def get_queryset(self):
-        if (year := self.kwargs.get("year", None)) is not None:
-            return Car.objects.filter(year__lte=year)
-
-        return super().get_queryset()
-
-
-class YearsRangeViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = CarSerializer
-
-    def get_queryset(self):
-        if (yearFrom := self.kwargs.get("year", None)) is not None:
-            return Car.objects.filter(year__range=(yearFrom, 2022))
-
-        return super().get_queryset()
