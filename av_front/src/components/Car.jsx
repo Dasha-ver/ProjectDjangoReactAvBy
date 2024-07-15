@@ -1,12 +1,20 @@
 import React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { green, blue } from "@mui/material/colors";
 
 
 const Car = (props) => {
 
+    const [isChecked, setChecked] = React.useState(false);
     let img = props.car.image_links.split(/,/)
     let card_params = props.car.card_params.split(/,/)
     let card_commercial = props.car.card_commercial.split(' ')
 
+    function handleChange(event) {
+        setChecked(event.target.checked);
+}
 
     return(
 
@@ -18,14 +26,23 @@ const Car = (props) => {
                            <div>{card_params[4]}</div></div>
             <div class="D"><div>{props.car.card_price_primary} р.</div>
                            <div>≈ {props.car.card_price_secondary} $</div></div>
-            <div class="E">E</div>
+            <div class="E">
+                <Checkbox
+                    Icon = {<BookmarkBorderIcon />}
+                    checkedIcon = {<BookmarkIcon />}
+                    onChange = {handleChange}
+                    sx = {{
+                       color: blue[500],
+                       "&.Mui-checked": {
+                          color: blue[200],
+                       },
+                    }}
+                />
+            </div>
             <div class="F">{props.car.card_comment_text}</div>
             <div class="G"><div>{card_commercial[0]} {card_commercial[1]}</div>
                            <div>≈ {card_commercial[2]} {card_commercial[3]} {card_commercial[4]} {card_commercial[5]}</div>                                              </div>
             <div class="H">{props.car.card_location}</div>
-
-
-
         </table>
 
     )

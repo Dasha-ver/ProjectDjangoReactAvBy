@@ -142,7 +142,6 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
                                defaultValue={markList} defaultValueId={location.state.id} models={models}
                                generalItems={generalItems} cars={cars} reset={reset}/>
             <div></div>
-            <div>My mark{mark}</div>
             <tr class="tr-car-item">
                  <CarsTable carsCount={selectedCars.length} cars={selectedCars}/>
             </tr>
