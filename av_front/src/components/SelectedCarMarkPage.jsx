@@ -80,7 +80,7 @@ const SelectedCarMarkPage = ({generalItems, cars, models}) => {
               }else if( mark !== "" && model !== "" && yearFrom !== ""){
                   getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__range='+yearFrom+','+year)
               }else if( mark !== "" && model !== "" && yearTo !== ""){
-                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__range='+year+','+yearTo)
+                  getSelectedCars('cars/?mark_link_text__in='+mark+'&model_link_text__in='+model+'&year__range='+yearFrom+','+year)
               }
              }
 
