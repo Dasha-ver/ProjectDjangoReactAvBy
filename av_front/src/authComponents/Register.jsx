@@ -1,14 +1,13 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import validator from 'validator'
-// Define the Login function.
+
 const Register = () => {
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('')
   const [emailError, setEmailError] = useState('')
 
-// Create the submit method.
   const submit = async e =>{
 
     e.preventDefault()
@@ -18,7 +17,7 @@ const Register = () => {
           username:username,
           password:password
         };
-    // Create the POST requuest
+
 
 
         await fetch(' http://127.0.0.1:8000/register/',{

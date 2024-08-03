@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 class User(AbstractUser):
@@ -149,6 +150,7 @@ class Car(models.Model):
     seventh_similar_ad_title = models.TextField(max_length=300)
     seventh_similar_ad_price = models.TextField(max_length=300)
     seventh_similar_ad_params = models.TextField(max_length=300)
+    bookmakers = models.ManyToManyField(User, through='UserCarRelation')
 
     def __str__(self):
         return f'{self.card_header}'
@@ -156,3 +158,13 @@ class Car(models.Model):
     class Meta:
         verbose_name = 'Карточка авто'
         verbose_name_plural = 'Карточки авто'
+
+
+class UserCarRelation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранное'
+        ordering = ['-id']

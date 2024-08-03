@@ -1,21 +1,21 @@
-import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.views import APIView
-from .serializers import UserSerializer, SecondPageSerializer, CarSerializer
+from rest_framework.viewsets import GenericViewSet
+from .serializers import UserSerializer, SecondPageSerializer, CarSerializer, UserCarRelationSerializer
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from django_filters import FilterSet, AllValuesFilter
-from django_filters import DateTimeFilter, NumberFilter
-from .models import GeneralPage, SecondPage, ThirdPage, Car, Rate
+from .models import SecondPage, Car, UserCarRelation
 
 
 class HomeView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        content = {'message': f'Welcome to the JWT Authentication page using React Js and Django {request.user}!'}
+        content = {'username': f'{request.user}',
+                   'userId': f'{request.user.id}'}
         return Response(content)
 
 
@@ -41,13 +41,9 @@ class RegisterView(APIView):
         return Response(serializer.data)
 
 
-class SecondPageView(generics.ListAPIView):
+class SecondPageView(viewsets.ModelViewSet):
     queryset = SecondPage.objects.all()
     serializer_class = SecondPageSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = {
-        "count": ["gt", "exact", "range"],
-    }
 
 
 class CarView(generics.ListAPIView):
@@ -56,8 +52,20 @@ class CarView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
         "year": ["range", "gte", "lte"],
-        "mark_link_text": ["in", "exact",],
+        "mark_link_text": ["in", "exact", ],
         "model_link_text": ["in", "exact"],
         "card_price_primary": ["range", "gte", "lte"],
         "card_price_secondary": ["range", "gte", "lte"],
     }
+
+
+class UserCarRelationView(UpdateModelMixin, GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = UserCarRelation.objects.all()
+    serializer_class = UserCarRelationSerializer
+    lookup_field = 'car'
+
+    def get_object(self):
+        obj, _ = UserCarRelation.objects.get_or_created(user=self.request.user,
+                                                        car_id=self.kwargs['car'])
+        return obj

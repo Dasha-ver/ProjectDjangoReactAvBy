@@ -8,28 +8,29 @@ const Navigate = () => {
 			setIsAuth(true);
 		}
 	},[isAuth]);
-  return (
 
-  <>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    return (
 
-        {isAuth ? <Link to="/" className='nav-link active'>Личный кабинет</Link> : null}
-        {isAuth ? <Link to="/logout" className='nav-link active'>Выйти</Link> :
+          <>
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                  <Link to="/login" className='nav-link active'>Войти</Link>}
-        {isAuth ? " ":
+                {isAuth ? <Link to="/" className='nav-link active'>Личный кабинет</Link> : null}
+                {isAuth ? <Link to="/logout" className='nav-link active'>Выйти</Link> :
 
-                   <Link to="/register" className='nav-link active'>Регистрация</Link>}
-      </ul>
+                          <Link to="/login" className='nav-link active'>Войти</Link>}
+                {isAuth ? " ":
 
-    </div>
-  </div>
-</nav>
-  </>
-  )
+                           <Link to="/register" className='nav-link active'>Регистрация</Link>}
+              </ul>
+
+            </div>
+          </div>
+        </nav>
+          </>
+          )
 }
 
 export default Navigate

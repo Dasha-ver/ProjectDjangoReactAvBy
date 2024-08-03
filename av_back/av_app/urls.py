@@ -7,10 +7,11 @@ router = routers.DefaultRouter()
 router.register('general', GeneralPageViewSet)
 router.register('marks_model', ThirdPageViewSet)
 router.register('rate', RateViewSet)
+router.register(r'car_relation', UserCarRelationView)
 
 urlpatterns = [
     path('cars/', CarView.as_view(), name='cars'),
-    path('models/', SecondPageView.as_view(), name='models'),
+    path('models/', SecondPageView.as_view({'get': 'list'}), name='models'),
     path('home/', HomeView.as_view(), name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view()),

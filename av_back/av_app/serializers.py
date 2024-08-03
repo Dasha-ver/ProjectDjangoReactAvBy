@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate
+from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate, UserCarRelation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -47,3 +47,9 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = '__all__'
+
+
+class UserCarRelationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserCarRelation
+        fields = ('id', 'car', 'user')

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django_object_actions import DjangoObjectActions
-from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate
+from .models import GeneralPage, SecondPage, ThirdPage, Car, User, Rate, UserCarRelation
 from .parser_for_rate import parser_for_rate
 from django.db.models import F
 
@@ -27,13 +27,16 @@ class ThirdPageAdmin(admin.ModelAdmin):
     list_display = ['id', 'model_name', 'link']
 
 
+class UserCarRelationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'car']
+
+
 class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
     def exchange(modeladmin, request, queryset):
         parser = parser_for_rate.ParserForRate()
         parser_for_rate.ParserForRate.run(parser)
         latest_rate = Rate.objects.latest("id")
         Car.objects.update(card_price_secondary=F('card_price_primary') / latest_rate.rate)
-        # Car.objects.update(card_price_secondary=F('card_price_secondary'.split(".")[0]))
 
     changelist_actions = ('exchange',)
 
@@ -68,3 +71,5 @@ admin.site.register(ThirdPage, ThirdPageAdmin)
 admin.site.register(Car, CarAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Rate, RateAdmin)
+admin.site.register(UserCarRelation, UserCarRelationAdmin)
+

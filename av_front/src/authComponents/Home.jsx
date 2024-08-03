@@ -4,14 +4,14 @@ import axios from 'axios'
 
 
 const Home = () => {
-  const [message,setMessage] = useState('');
+  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     if(localStorage.getItem('access_token') ===null){
       window.location.href = '/login'
 
-    }
-    else{
+    }else{
       (async () =>{
         try{
           const {data} = await axios.get(
@@ -22,7 +22,8 @@ const Home = () => {
               withCredentials:true,
             }
           );
-          setMessage(data.message);
+          setUsername(data.username)
+          setUserId(data.userId)
         }
         catch (e){
           console.log('not auth')
@@ -31,7 +32,8 @@ const Home = () => {
   },[]);
   return (
     <div className="form-signin mt-5 text-center">
-    <h3>Hi {message}</h3>
+    <h3>Добро пожаловать, {username}!</h3>
+    <div>{userId}</div>
   </div>
   )
 }
