@@ -10,8 +10,6 @@ import axios from 'axios'
 const Car = (props) => {
 
     const [isChecked, setChecked] = React.useState(false)
-    const [username, setUsername] = React.useState('');
-    const [userId, setUserId] = React.useState('');
     let img = props.car.image_links.split(/,/)
     let card_params = props.car.card_params.split(/,/)
     let card_commercial = props.car.card_commercial.split(' ')
@@ -30,8 +28,18 @@ const Car = (props) => {
                   withCredentials:true,
                 }
               );
-              setUsername(data.username)
-              setUserId(data.userId)
+
+              await fetch(' http://127.0.0.1:8000/user_car_relations/',{
+                  method:'POST',
+                  headers:{'Content-Type':"application/json"},
+                  body: JSON.stringify(
+                    {
+                      user:data.userId,
+                      car:props.car.id
+                    }
+                  )
+        });
+
             }
             catch (e){
               console.log('not auth')
@@ -43,7 +51,6 @@ const Car = (props) => {
     return(
 
         <table class="car-item-table">
-{/*             <div>{username}</div> */}
             <div class="A"><img class="car-item-img" src={img[0]} alt="No image"/></div>
             <div class="B">{props.car.mark_link_text} {props.car.model_link_text}</div>
             <div class="C"><div>{card_params[0]},</div>

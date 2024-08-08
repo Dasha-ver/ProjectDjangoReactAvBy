@@ -59,13 +59,20 @@ class CarView(generics.ListAPIView):
     }
 
 
-class UserCarRelationView(UpdateModelMixin, GenericViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = UserCarRelation.objects.all()
-    serializer_class = UserCarRelationSerializer
-    lookup_field = 'car'
+class UserCarRelationView(APIView):
+    def get(self, request, pk=None):
+        if pk is not None:
+            relations = UserCarRelation.objects.get(pk=pk)
+            serializer = UserCarRelationSerializer(relations)
+            return Response(serializer.data)
+        else:
+            relations = UserCarRelation.objects.all()
+            serializer = UserCarRelationSerializer(relations, many=True)
+            return Response(serializer.data)
 
-    def get_object(self):
-        obj, _ = UserCarRelation.objects.get_or_created(user=self.request.user,
-                                                        car_id=self.kwargs['car'])
-        return obj
+    def post(self, request):
+        serializer = UserCarRelationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

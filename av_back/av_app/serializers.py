@@ -52,4 +52,4 @@ class CarSerializer(serializers.ModelSerializer):
 class UserCarRelationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCarRelation
-        fields = ('id', 'car', 'user')
+        fields = '__all__'

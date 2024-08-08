@@ -7,7 +7,6 @@ router = routers.DefaultRouter()
 router.register('general', GeneralPageViewSet)
 router.register('marks_model', ThirdPageViewSet)
 router.register('rate', RateViewSet)
-router.register(r'car_relation', UserCarRelationView)
 
 urlpatterns = [
     path('cars/', CarView.as_view(), name='cars'),
@@ -15,5 +14,7 @@ urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view()),
+    path('user_car_relations/', UserCarRelationView.as_view(), name='car-relations'),
+    path('user_car_relation/<int:pk>/', UserCarRelationView.as_view(), name='car-relations-detail')
 ]
 urlpatterns += router.urls

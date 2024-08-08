@@ -31,10 +31,10 @@ const Register = () => {
           )
         });
         window.location.href='/login'
-}else{
-    setEmailError('Enter valid Email!')
-    }
-  }
+    }else{
+        setEmailError('Enter valid Email!')
+        }
+      }
 
   return (
     <div className="Auth-form-container">
