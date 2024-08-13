@@ -4,8 +4,6 @@ import GeneralItem from "./GeneralItem"
 
 const CarsTable = ({cars, carsCount}) => {
 
-
-
 return(
     <div>
 

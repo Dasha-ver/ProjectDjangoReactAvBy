@@ -10,7 +10,7 @@ const ModelPage= ({models}) => {
     return(
     <div>
         {models.map(model => <Model model={model} key={model.id}/>)}
-         </div>
+    </div>
     )
 }
 

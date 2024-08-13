@@ -59,16 +59,14 @@ class CarView(generics.ListAPIView):
     }
 
 
-class UserCarRelationView(APIView):
-    def get(self, request, pk=None):
-        if pk is not None:
-            relations = UserCarRelation.objects.get(pk=pk)
-            serializer = UserCarRelationSerializer(relations)
-            return Response(serializer.data)
-        else:
-            relations = UserCarRelation.objects.all()
-            serializer = UserCarRelationSerializer(relations, many=True)
-            return Response(serializer.data)
+class UserCarRelationView(generics.ListAPIView):
+    queryset = UserCarRelation.objects.all()
+    serializer_class = UserCarRelationSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = {
+        "user": ["in", "exact", ],
+        "car": ["in", "exact", ],
+    }
 
     def post(self, request):
         serializer = UserCarRelationSerializer(data=request.data)
@@ -76,3 +74,13 @@ class UserCarRelationView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteObject(APIView):
+    def delete(self, request, pk):
+        try:
+            obj = UserCarRelation.objects.get(pk=pk)
+            obj.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except UserCarRelation.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

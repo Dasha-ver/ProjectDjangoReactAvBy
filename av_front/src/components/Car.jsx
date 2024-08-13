@@ -3,21 +3,29 @@ import Checkbox from "@mui/material/Checkbox";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { green, blue } from "@mui/material/colors";
-import useState from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
+import CheckedCar from './CheckedCar'
 
+const API_URL_CHECKED_CAR_PAGE = 'http://127.0.0.1:8000/user_car_relations/'
 
 const Car = (props) => {
 
     const [isChecked, setChecked] = React.useState(false)
+    const [checkedCars, setCheckedCars] = React.useState([])
+    const [userId, setUserId] = React.useState('')
     let img = props.car.image_links.split(/,/)
     let card_params = props.car.card_params.split(/,/)
     let card_commercial = props.car.card_commercial.split(' ')
 
-    function handleChange(event) {
-        if(localStorage.getItem('access_token') ===null){
-            window.location.href = '/login'
-        }else{
+
+    async function getCheckedCars(user, car) {
+
+        const response = await axios.get(API_URL_CHECKED_CAR_PAGE+'?user__in='+user+'&car__in='+car)
+        setCheckedCars(response.data)
+    }
+
+    useEffect(() => {
           (async () =>{
             try{
               const {data} = await axios.get(
@@ -28,29 +36,46 @@ const Car = (props) => {
                   withCredentials:true,
                 }
               );
+              setUserId(data.userId)
+            }
+            catch (e){
+              console.log('not auth')
+            }
+          })();
+        getCheckedCars(userId, props.car.id)
+        if(checkedCars.length > 0){
+            setChecked(true)}
+      },[checkedCars.length, userId, props.car.id]);
 
+    function handleChange(event) {
+        if(localStorage.getItem('access_token') ===null){
+            window.location.href = '/login'
+        }else{
+          (async () =>{
+            try{
               await fetch(' http://127.0.0.1:8000/user_car_relations/',{
                   method:'POST',
                   headers:{'Content-Type':"application/json"},
                   body: JSON.stringify(
                     {
-                      user:data.userId,
+                      user:userId,
                       car:props.car.id
                     }
                   )
         });
-
-            }
+    }
             catch (e){
               console.log('not auth')
             }
           })()}
-        setChecked(event.target.checked);
+        setChecked(event.target.checked)
 }
 
     return(
 
         <table class="car-item-table">
+            <div>{checkedCars.length}</div>
+            <div>{checkedCars.map(checkedCar => <CheckedCar checkedCar={checkedCar} key={checkedCar.id}/>)}</div>
             <div class="A"><img class="car-item-img" src={img[0]} alt="No image"/></div>
             <div class="B">{props.car.mark_link_text} {props.car.model_link_text}</div>
             <div class="C"><div>{card_params[0]},</div>
@@ -62,7 +87,8 @@ const Car = (props) => {
                 <Checkbox
                     Icon = {<BookmarkBorderIcon />}
                     checkedIcon = {<BookmarkIcon />}
-                    onChange = {handleChange}
+                    checked={isChecked}
+                    onChange ={handleChange}
                     sx = {{
                        color: blue[500],
                        "&.Mui-checked": {

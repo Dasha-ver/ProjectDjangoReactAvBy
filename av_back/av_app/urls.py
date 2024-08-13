@@ -15,6 +15,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view()),
     path('user_car_relations/', UserCarRelationView.as_view(), name='car-relations'),
-    path('user_car_relation/<int:pk>/', UserCarRelationView.as_view(), name='car-relations-detail')
+    path('user_car_relations/delete/<int:pk>/', DeleteObject.as_view(), name='car-relations-delete')
 ]
 urlpatterns += router.urls

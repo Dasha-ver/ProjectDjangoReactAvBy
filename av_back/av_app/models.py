@@ -168,3 +168,5 @@ class UserCarRelation(models.Model):
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранное'
         ordering = ['-id']
+
+
