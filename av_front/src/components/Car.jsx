@@ -47,35 +47,41 @@ const Car = (props) => {
             setChecked(true)}
       },[checkedCars.length, userId, props.car.id]);
 
+    const checkedCarId = checkedCars.map(checkedCar => {
+        return checkedCar.id})
+
+
     function handleChange(event) {
         if(localStorage.getItem('access_token') ===null){
             window.location.href = '/login'
         }else{
-          (async () =>{
-            try{
-              await fetch(' http://127.0.0.1:8000/user_car_relations/',{
-                  method:'POST',
-                  headers:{'Content-Type':"application/json"},
-                  body: JSON.stringify(
-                    {
-                      user:userId,
-                      car:props.car.id
-                    }
-                  )
-        });
-    }
-            catch (e){
-              console.log('not auth')
+            if(isChecked === false){
+              (async () =>{
+                try{
+                  await fetch(' http://127.0.0.1:8000/user_car_relations/',{
+                      method:'POST',
+                      headers:{'Content-Type':"application/json"},
+                      body: JSON.stringify(
+                        {
+                          user:userId,
+                          car:props.car.id
+                        }
+                      )
+            });
+        }
+                catch (e){
+                  console.log('not auth')
+                }
+              })()
+          }else{
+                axios.delete(API_URL_CHECKED_CAR_PAGE+ 'delete/'+checkedCarId+'/')
+          }
+            setChecked(event.target.checked)
             }
-          })()}
-        setChecked(event.target.checked)
 }
-
     return(
 
         <table class="car-item-table">
-            <div>{checkedCars.length}</div>
-            <div>{checkedCars.map(checkedCar => <CheckedCar checkedCar={checkedCar} key={checkedCar.id}/>)}</div>
             <div class="A"><img class="car-item-img" src={img[0]} alt="No image"/></div>
             <div class="B">{props.car.mark_link_text} {props.car.model_link_text}</div>
             <div class="C"><div>{card_params[0]},</div>
