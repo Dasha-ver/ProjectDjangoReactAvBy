@@ -51,6 +51,7 @@ class CarView(generics.ListAPIView):
     serializer_class = CarSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
+        "id": ["in", "exact"],
         "year": ["range", "gte", "lte"],
         "mark_link_text": ["in", "exact", ],
         "model_link_text": ["in", "exact"],

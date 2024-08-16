@@ -71,7 +71,6 @@ const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultVal
 
         const handleYearFromChange = (obj) => {
           setYearFrom(obj)
-//           changedMarkCount(obj.count)
           changedYearFrom(obj.key)
        }
         const handleYearToChange = (obj) => {

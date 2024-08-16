@@ -8,7 +8,6 @@ import CarsTable from "./CarsTable"
 import axios from "axios"
 
 
-
 const GeneralPage= ({generalItems, cars, models}) => {
 
     const [selectedCars, setSelectedCars] = useState([])

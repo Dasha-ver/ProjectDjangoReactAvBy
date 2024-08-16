@@ -20,7 +20,6 @@ const Car = (props) => {
 
 
     async function getCheckedCars(user, car) {
-
         const response = await axios.get(API_URL_CHECKED_CAR_PAGE+'?user__in='+user+'&car__in='+car)
         setCheckedCars(response.data)
     }
