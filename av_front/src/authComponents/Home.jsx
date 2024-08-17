@@ -3,9 +3,9 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import CarsTable from "../components/CarsTable"
 import CheckedCar from '../components/CheckedCar'
+import GeneralLineTableForAccount from "../components/GeneralLineTableForAccount"
 
 const API_URL_CHECKED_CAR_PAGE = 'http://127.0.0.1:8000/user_car_relations/'
-const API_URL_CAR_PAGE = 'http://127.0.0.1:8000/cars/'
 
 const Home = ({cars}) => {
     const [username, setUsername] = useState('');
@@ -18,10 +18,6 @@ const Home = ({cars}) => {
         setCheckedCarsId(response.data)
     }
 
-    async function getCheckedCars(carsId) {
-        const response = await axios.get(API_URL_CAR_PAGE +'?id__in='+carsId)
-        setCheckedCars(response.data)
-    }
 
     const checkedId = checkedCarsId.map(checkedCar => {
             return checkedCar.car+','})
@@ -49,11 +45,13 @@ const Home = ({cars}) => {
             }
           })()};
             getCheckedCarsId(userId)
-            getCheckedCars(checkedId)
+//             getCheckedCars(checkedId)
           },[userId]);
 
     return (
-        <div className="form-signin mt-5 text-center">
+
+        <div>
+             <GeneralLineTableForAccount carsId={checkedId} setCheckedCars={setCheckedCars}/>
             <h3>Добро пожаловать, {username}!</h3>
         <div>{userId}</div>
             <div>{checkedId}</div>

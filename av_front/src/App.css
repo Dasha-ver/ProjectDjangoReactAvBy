@@ -582,8 +582,17 @@
 
 .nav-link {
    color: #4682B4 !important;
+}
 
+.bookmark-ribbon{
+    width: 2.6vw;
+    height: 31px;
+    background-image: url('pictures/bookmark-ribbon.png');
+}
 
+.my-checked-cars{
+    border: none;
+    background-color: white;
 }
 
 
