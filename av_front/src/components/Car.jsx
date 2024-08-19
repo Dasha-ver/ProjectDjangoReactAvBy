@@ -3,9 +3,11 @@ import Checkbox from "@mui/material/Checkbox";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { green, blue } from "@mui/material/colors";
-import {useState, useEffect} from 'react'
-import axios from 'axios'
-import CheckedCar from './CheckedCar'
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+import CheckedCar from './CheckedCar';
+import {useNavigate} from 'react-router-dom';
+import CarCardPage from './CarCardPage'
 
 const API_URL_CHECKED_CAR_PAGE = 'http://127.0.0.1:8000/user_car_relations/'
 
@@ -17,6 +19,7 @@ const Car = (props) => {
     let img = props.car.image_links.split(/,/)
     let card_params = props.car.card_params.split(/,/)
     let card_commercial = props.car.card_commercial.split(' ')
+    const navigate = useNavigate()
 
 
     async function getCheckedCars(user, car) {
@@ -82,7 +85,11 @@ const Car = (props) => {
 
         <table class="car-item-table">
             <div class="A"><img class="car-item-img" src={img[0]} alt="No image"/></div>
-            <div class="B">{props.car.mark_link_text} {props.car.model_link_text}</div>
+            <div class="B">
+                <button class="car-name" onClick={() => navigate("/CarCardPage",{state:{id:props.car.id}})}>
+                    {props.car.mark_link_text} {props.car.model_link_text}
+                </button>
+            </div>
             <div class="C"><div>{card_params[0]},</div>
                            <div>{card_params[1]}, {card_params[2]}, {card_params[3]},</div>
                            <div>{card_params[4]}</div></div>

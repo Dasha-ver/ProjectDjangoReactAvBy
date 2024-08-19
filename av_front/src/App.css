@@ -510,12 +510,8 @@
     }
 .B {
     width: 460px;
-    color: #1E90FF;
     margin-top: 15px;
     grid-area: i;
-    text-align: left;
-    font-weight: 900;
-    font_size: 30px;
     }
 
 .C {
@@ -593,6 +589,19 @@
 .my-checked-cars{
     border: none;
     background-color: white;
+}
+
+.car-name{
+    width: 200px;
+    height: 30px;
+    margin-top: 5px;
+    color: #1E90FF;
+    border: none;
+    margin-right: 320px;
+    font-weight: 900;
+    font_size: 30px;
+    background-color: white;
+    text-align: left;
 }
 
 

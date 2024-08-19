@@ -18,7 +18,6 @@ const Home = ({cars}) => {
         setCheckedCarsId(response.data)
     }
 
-
     const checkedId = checkedCarsId.map(checkedCar => {
             return checkedCar.car+','})
 
@@ -45,7 +44,6 @@ const Home = ({cars}) => {
             }
           })()};
             getCheckedCarsId(userId)
-//             getCheckedCars(checkedId)
           },[userId]);
 
     return (

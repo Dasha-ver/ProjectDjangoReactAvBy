@@ -4,6 +4,7 @@ import GeneralPage from "./components/GeneralPage";
 import GeneralItem from "./components/GeneralItem"
 import Car from "./components/Car"
 import SelectedCarMarkPage from "./components/SelectedCarMarkPage"
+import CarCardPage from "./components/CarCardPage"
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GeneralLineTable from "./components/GeneralLineTable"
@@ -61,6 +62,7 @@ function App() {
         <div className="App">
 
             <Routes>
+                <Route path="/CarCardPage" element={<CarCardPage/>} />
                 <Route path="/GeneralPage" element={<GeneralPage generalItems={generalItems} cars={cars} models={models}/>} />
                 <Route path="/SelectedCar" element={<SelectedCarMarkPage generalItems={generalItems} models={models} cars={cars}/>} />
                 <Route path="/" element={<Home/>}/>
