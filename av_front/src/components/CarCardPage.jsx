@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 import CarCard from "./CarCard";
+import GeneralLineTable from "./GeneralLineTable"
 
 const API_URL_CAR_PAGE = 'http://127.0.0.1:8000/cars/'
 
@@ -22,7 +23,12 @@ const CarCardPage = () => {
 
     return(
         <div>
-            {cars.map(car => <CarCard carCard={car} key={car.id}/>)}
+            <div>
+                <GeneralLineTable/>
+            </div>
+            <div>
+                {cars.map(car => <CarCard carCard={car} key={car.id}/>)}
+            </div>
         </div>
 
         )

@@ -531,8 +531,6 @@
 .E {
     margin-top: 15px;
     grid-area: n;
-
-
 }
 .F {
     text-align: left;
@@ -599,10 +597,107 @@
     border: none;
     margin-right: 320px;
     font-weight: 900;
-    font_size: 30px;
+    font-size: 18px;
     background-color: white;
     text-align: left;
 }
+
+.car-card-item-table{
+    margin-left: 50px;
+    margin-top: 2px;
+    background-color: white;
+    width: 930px;
+    height: 220px;
+    display: grid;
+    grid-template-areas: "f f f f f f f f f f f f f"
+                         "f f f f f f f f f f f f f"
+                         "i i i i i i i i i i i i i"
+                         "b b b b b b b b b o o o o"
+                         "b b b b b b b b b n n n n"
+                         "b b b b b b b b b n n n n"
+                         "b b b b b b b b b p p p p"
+                         "b b b b b b b b b d d d d"
+                         "b b b b b b b b b r r r r";
+    gap: 1% 1%;
+}
+
+.J {
+    grid-area: f;
+    height: 50px;
+    font-weight: 900;
+    font-size: 25px;
+    text-align: left;
+    margin-left: 15px;
+    padding-top: 10px;
+    font-family: Verdana;
+    }
+
+.K {
+    grid-area: i;
+    height: 25px;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: left;
+    margin-left: 15px;
+    font-family: Verdana;
+    color: #1E90FF;
+    }
+
+.L {
+    grid-area: b;
+    width: 630px;
+ }
+
+.M {
+    grid-area: o;
+    width: 280px;
+    text-align: left;
+}
+
+.car-card-price-primary{
+    font-weight: 900;
+    font-size: 20px;
+    font-family: Verdana;
+    color: black;
+}
+
+.car-card-price-secondary{
+    font-size: 13px;
+    font-family: Verdana;
+    color: grey;
+}
+
+.car-card-commercial{
+    border-radius: 5px;
+    background-color: grey;
+}
+
+.N {
+    background-color: orange;
+    grid-area: n;
+
+}
+.O {
+    background-color: #BC8F8F;
+    grid-area: p;
+
+}
+.P {
+    background-color: brown;
+    grid-area: d;
+
+}
+
+.R {
+    background-color: green;
+    grid-area: r;
+
+}
+
+.car-card-item {
+    margin-left: 50px;
+}
+
 
 
 

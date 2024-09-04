@@ -10,7 +10,7 @@ function CarouselComponent({img}) {
         };
 
         return (
-            <div className="container">
+            <div class="container">
               <Carousel infiniteLoop="true" autoPlay="true" onChange={onChange}>
                 <div>
                   <img
@@ -18,7 +18,6 @@ function CarouselComponent({img}) {
                     src={img[0]}
                     alt="image1"
                   />
-                  <p className="legend">Heading 1</p>
                 </div>
                 <div>
                   <img
@@ -26,15 +25,13 @@ function CarouselComponent({img}) {
                     src={img[0]}
                     alt="image2"
                   />
-                  <p className="legend">Heading 2</p>
                 </div>
                 <div>
                   <img
                     className="image3"
-                    src={img[2]}
+                    src={img[0]}
                     alt="image3"
                   />
-                  <p className="legend">Heading 3</p>
                 </div>
               </Carousel>
             </div>

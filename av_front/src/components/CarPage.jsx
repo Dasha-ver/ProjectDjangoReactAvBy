@@ -8,10 +8,10 @@ const CarPage= ({cars}) => {
     }
 
     return(
-    <div>
-        {cars.map(car => <Car car={car} key={car.id}/>)}
-         </div>
-    )
+        <div>
+            {cars.map(car => <Car car={car} key={car.id}/>)}
+        </div>
+        )
 }
 
 export default CarPage;
