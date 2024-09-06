@@ -483,7 +483,6 @@
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
-
 }
 
 .car-item-table{
@@ -603,11 +602,10 @@
 }
 
 .car-card-item-table{
-    margin-left: 50px;
+    margin-left: 10px;
     margin-top: 2px;
     background-color: white;
     width: 930px;
-    height: 220px;
     display: grid;
     grid-template-areas: "f f f f f f f f f f f f f"
                          "f f f f f f f f f f f f f"
@@ -615,9 +613,9 @@
                          "b b b b b b b b b o o o o"
                          "b b b b b b b b b n n n n"
                          "b b b b b b b b b n n n n"
-                         "b b b b b b b b b p p p p"
-                         "b b b b b b b b b d d d d"
-                         "b b b b b b b b b r r r r";
+                         "b b b b b b b b b n n n n"
+                         "b b b b b b b b b . . . ."
+                         "b b b b b b b b b . . . .";
     gap: 1% 1%;
 }
 
@@ -646,12 +644,14 @@
 .L {
     grid-area: b;
     width: 630px;
+    height: 560px;
  }
 
 .M {
     grid-area: o;
     width: 280px;
     text-align: left;
+
 }
 
 .car-card-price-primary{
@@ -668,35 +668,207 @@
 }
 
 .car-card-commercial{
-    border-radius: 5px;
-    background-color: grey;
+    border-radius: 10px;
+    background-color: #F0F8FF;
+    color: #1E90FF;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 5px;
+    margin-top: 15px;
 }
 
 .N {
-    background-color: orange;
     grid-area: n;
-
-}
-.O {
-    background-color: #BC8F8F;
-    grid-area: p;
-
-}
-.P {
-    background-color: brown;
-    grid-area: d;
+    font-size: 16px;
+    text-align: left;
 
 }
 
-.R {
-    background-color: green;
-    grid-area: r;
+.car-card-params{
+    margin-top: 20px;
+}
 
+.car-card-short-description{
+    margin-top: 10px;
+}
+
+.car-card-short-modification{
+    margin-top: 10px;
+}
+
+.car-card-location{
+    font-size: 13px;
+    font-family: Verdana;
+    color: grey;
+    margin-top: 10px;
 }
 
 .car-card-item {
     margin-left: 50px;
+    background-color: white;
+    margin-right: 470px;
 }
+
+.car-card-description-title{
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 10px;
+    font-weight: 900;
+    font-size: 22px;
+    font-family: Verdana;
+    color: black;
+}
+
+.car-card-card-comment-text{
+    padding-left:20px;
+    text-align: left;
+    width: 600px;
+    padding-top: 15px;
+}
+
+.car-card-title-exchange{
+    text-align: left;
+    padding-left: 20px;
+    margin-top: 20px;
+    font-weight: 900;
+    font-size: 17px;
+    font-family: Verdana;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.car-card-title{
+    text-align: left;
+    margin-top: 20px;
+    font-weight: 900;
+    font-size: 17px;
+    font-family: Verdana;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.td-car-card-description{
+    width: 220px;
+    text-align: left;
+    padding-left: 20px;
+    padding-bottom: 40px;
+}
+
+.car-card-credit-and-leasing-table{
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.car-card-finance-image{
+    padding-top: 15px;
+    border-radius: 50px;
+    width: 60px;
+}
+
+.car-card-finance-title{
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 900;
+    font-size: 20px;
+    font-family: Verdana;
+    color: black;
+}
+
+.car-card-finance-description{
+    text-align: left;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.car-card-similar-ads-title{
+    text-align: left;
+    margin-top: 5px;
+    margin-left: 50px;
+    font-weight: 900;
+    font-size: 22px;
+    font-family: Verdana;
+    color: black;
+    background-color: #F5F5F5;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 955px;
+
+}
+
+.car-card-grey{
+    color: grey;
+    text-align: left;
+    margin-left: 50px;
+    background-color: #F5F5F5;
+    padding-left: 20px;
+    font-size: 14px;
+    width: 955px;
+
+}
+
+.car-card-similar-cars-table{
+    background-color: white;
+    margin-left: 50px;
+    width: 955px;
+}
+
+.car-card-similar-car{
+    padding-top: 10px;
+}
+
+.car-card-similar-ad-foto-div{
+    height: 230px;
+    width: 295px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.car-card-similar-ad-foto{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.car-card-similar-ad-title{
+    margin-top: 20px;
+    text-align: left;
+    padding-left:10px;
+    color: #1E90FF;
+    font-weight: 900;
+    font-size: 16px;
+}
+
+.car-card-similar-ad-price-byn{
+    padding-left: 10px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.car-card-similar-ad-price-usd{
+    color: grey;
+}
+
+.car-card-similar-ad-params{
+    padding-left: 10px;
+    width: 220px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.car-card-similar-ad-foto-div-small{
+    height: 200px;
+    width: 218px;
+    justify-content: center;
+    align-items: center;
+}
+
 
 
 
