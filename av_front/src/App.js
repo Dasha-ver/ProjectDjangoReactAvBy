@@ -11,12 +11,12 @@ import GeneralLineTable from "./components/GeneralLineTable"
 import Login from "./authComponents/Login";
 import Home from './authComponents/Home';
 import Logout from './authComponents/Logout';
-import Register from './authComponents/Register'
+import Register from './authComponents/Register';
 
-const API_URL_GENERAL_PAGE = 'http://127.0.0.1:8000/general/'
-const API_URL_CAR_PAGE = 'http://127.0.0.1:8000/cars/'
-const API_URL_MODEL_PAGE = 'http://127.0.0.1:8000/models/'
-const API_URL_CHECKED_CAR_PAGE = 'http://127.0.0.1:8000/user_car_relations/'
+const API_URL_GENERAL_PAGE = 'http://127.0.0.1:8000/general/';
+const API_URL_CAR_PAGE = 'http://127.0.0.1:8000/cars/';
+const API_URL_MODEL_PAGE = 'http://127.0.0.1:8000/models/';
+const API_URL_CHECKED_CAR_PAGE = 'http://127.0.0.1:8000/user_car_relations/';
 
 
 function App() {

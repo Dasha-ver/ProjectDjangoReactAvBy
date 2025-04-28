@@ -102,7 +102,7 @@ const FindForParamsForm = ({generalItems, models, cars, defaultValue, defaultVal
         }
 
         const handleReset = (event) => {
-             setMark('')
+            setMark('')
             setModel('')
             setYearFrom(null)
             setYearTo(null)

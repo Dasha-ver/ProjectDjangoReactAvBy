@@ -181,3 +181,5 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 AUTH_USER_MODEL = "av_app.User"
+
+TELEGRAM_BOT_API_KEY = '7864334080:AAGnwAj-MZZBsIFoW3TZEDn3yyzjcxMyXdI'
