@@ -41,17 +41,17 @@ class Command(BaseCommand):
 
         elif message.text == 'Хочу получать инфу по розыгрышам':
             bot.send_message(message.from_user.id,
-                             'Вы пишете первый пост, его проверяют модераторы, и, если всё хорошо, отправляют в основную ленту Хабра, где он набирает просмотры, комментарии и рейтинг. В дальнейшем премодерация уже не понадобится. Если с постом что-то не так, вас попросят его доработать.\n \nПолный текст можно прочитать по ' + '[ссылке](https://habr.com/ru/sandbox/start/)',
+                             'Инфа',
                              parse_mode='Markdown')
 
         elif message.text == 'Хочу получать инфу по акциям':
             bot.send_message(message.from_user.id,
-                             'Прочитать правила сайта вы можете по ' + '[ссылке](https://habr.com/ru/docs/help/rules/)',
+                             'Инфа',
                              parse_mode='Markdown')
 
         elif message.text == 'Хочу зарегестрироваться на av':
             bot.send_message(message.from_user.id,
-                             'Подробно про советы по оформлению публикаций прочитать по ' + '[ссылке](https://habr.com/ru/docs/companies/design/)',
+                             'Подробно про советы по оформлению публикаций прочитать по ' + '[ссылке](http://localhost:3000/register)',
                              parse_mode='Markdown')
 
-    bot.polling(none_stop=True, interval=0)  # обязательная для работы бота часть
+    bot.polling(none_stop=True, interval=0)
